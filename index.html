@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Cover Studio — GTA-style cover art maker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23ff2d95'/%3E%3Ctext x='16' y='23' font-size='18' font-family='sans-serif' font-weight='900' text-anchor='middle' fill='%23fff6e0'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">V</span>
+    <div>
+      <h1>Vice Cover Studio</h1>
+      <p>Turn your photo and a caption into GTA-style cover art</p>
+    </div>
+  </div>
+  <div class="top-actions">
+    <button id="present-btn" type="button" class="ghost">Present cover</button>
+    <button id="export-btn" type="button" class="primary">Export PNG</button>
+  </div>
+</header>
+
+<main class="editor">
+  <section class="controls" aria-label="Cover controls">
+    <div class="group">
+      <h2>1 · Photos</h2>
+      <p class="hint">Your photos never leave this machine. Click a slot to pick a photo, or use a sample.</p>
+      <div class="slots">
+        <div class="slot" data-slot="0">
+          <img alt="">
+          <span class="slot-name">Photo A</span>
+          <label class="upload">Choose file
+            <input type="file" accept="image/*" data-slot="0">
+          </label>
+          <button type="button" class="sample-btn" data-slot="0" data-src="assets/sample-sunset.jpg">Use sunset sample</button>
+        </div>
+        <div class="slot" data-slot="1">
+          <img alt="">
+          <span class="slot-name">Photo B</span>
+          <label class="upload">Choose file
+            <input type="file" accept="image/*" data-slot="1">
+          </label>
+          <button type="button" class="sample-btn" data-slot="1" data-src="assets/sample-neon.jpg">Use neon sample</button>
+        </div>
+        <div class="slot" data-slot="2">
+          <img alt="">
+          <span class="slot-name">Photo C</span>
+          <label class="upload">Choose file
+            <input type="file" accept="image/*" data-slot="2">
+          </label>
+          <button type="button" class="sample-btn" data-slot="2" data-src="assets/sample-sunset.jpg">Use sunset sample</button>
+        </div>
+      </div>
+      <p class="hint">Tip: drop image files straight onto the preview, or click a panel in the preview to crop it.</p>
+    </div>
+
+    <div class="group">
+      <h2>2 · Layout &amp; grade</h2>
+      <div id="layout-options" class="options" role="group" aria-label="Layout"></div>
+      <div id="grade-options" class="options" role="group" aria-label="Colour grade"></div>
+    </div>
+
+    <div class="group">
+      <h2>3 · Caption</h2>
+      <label class="field">Title
+        <input id="title-input" type="text" value="VICE NIGHTS" maxlength="48" autocomplete="off">
+      </label>
+      <label class="field">Subtitle
+        <input id="subtitle-input" type="text" value="TWO SIDES OF THE SAME CITY" maxlength="64" autocomplete="off">
+      </label>
+    </div>
+
+    <div class="group">
+      <h2>4 · Selected panel</h2>
+      <p class="hint"><strong id="panel-label">Panel 1</strong> — click a panel in the preview to pick it.</p>
+      <label class="field">Photo in this panel
+        <select id="panel-photo">
+          <option value="0">Photo A</option>
+          <option value="1">Photo B</option>
+          <option value="2">Photo C</option>
+        </select>
+      </label>
+      <label class="field">Zoom <span id="zoom-value" class="value">1.00×</span>
+        <input id="panel-zoom" type="range" min="1" max="2.5" step="0.01" value="1">
+      </label>
+      <label class="field">Pan sideways <span id="pan-x-value" class="value">0%</span>
+        <input id="panel-pan-x" type="range" min="-0.4" max="0.4" step="0.01" value="0">
+      </label>
+      <label class="field">Pan up / down <span id="pan-y-value" class="value">0%</span>
+        <input id="panel-pan-y" type="range" min="-0.4" max="0.4" step="0.01" value="0">
+      </label>
+      <button id="fill-all" type="button" class="ghost wide">Fill every panel with this photo</button>
+    </div>
+
+    <div class="group">
+      <h2>5 · Export</h2>
+      <label class="field">Post size
+        <select id="size-select">
+          <option value="1080x1350">Portrait · 1080 × 1350</option>
+          <option value="1080x1080">Square · 1080 × 1080</option>
+          <option value="1920x1080">Wide · 1920 × 1080</option>
+        </select>
+      </label>
+      <p class="hint">Exports a PNG at the size above. Works fully offline; nothing is uploaded.</p>
+    </div>
+  </section>
+
+  <section class="stage" aria-label="Live preview">
+    <canvas id="preview" width="540" height="675"></canvas>
+    <p id="status" class="status">Loading…</p>
+  </section>
+</main>
+
+<div id="present" class="present" role="dialog" aria-label="Cover fullscreen">
+  <canvas id="present-canvas"></canvas>
+  <p>Click anywhere to go back to the editor</p>
+</div>
+
+<script src="cover.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
